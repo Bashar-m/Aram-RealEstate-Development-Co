@@ -1,0 +1,34 @@
+/* Aram — extracted visual identity tokens */
+:root {
+  --aram-green: #3B4D23;
+  --aram-green-deep: #28371D;
+  --aram-gold: #A68F31;
+  --aram-gold-light: #D0BA67;
+  --aram-ivory: #F7F7F5;
+  --aram-neutral: #EDEDEC;
+  --aram-text: #28371D;
+  --aram-radius: 16px;
+}
+
+body {
+  margin: 0;
+  background: var(--aram-ivory);
+  color: var(--aram-text);
+  direction: rtl;
+  font-family: "IBM Plex Sans Arabic", "Tajawal", sans-serif;
+}
+
+.aram-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 14px 28px;
+  background: var(--aram-green);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background .2s ease;
+}
+.aram-button:hover { background: var(--aram-green-deep); }
+.aram-button--gold { background: var(--aram-gold-light); color: var(--aram-green-deep); }

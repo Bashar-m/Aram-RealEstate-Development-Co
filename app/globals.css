@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────
+   ARAM brand tokens — edit colours here.
+   Every utility (bg-brand, text-gold-ink …) reads from these.
+   ───────────────────────────────────────────── */
+@theme {
+  --color-brand: #3b4d23; /* Primary green */
+  --color-brand-deep: #28371d; /* Deep green — dark sections */
+  --color-gold: #a68f31; /* Gold — accents, large text only */
+  --color-gold-light: #d0ba67; /* Light gold — on dark backgrounds, decor */
+  --color-gold-ink: #7a6820; /* Gold for small text on light backgrounds (AA contrast) */
+  --color-ivory: #f7f7f5; /* Main background */
+  --color-stone: #ededec; /* Secondary background */
+  --color-ink: #28371d; /* Headings / body text */
+  --color-muted: #59614f; /* Secondary text */
+  --color-line: #dcddd5; /* Hairlines and borders */
+  --color-danger: #9b2c2c;
+
+  --font-sans: var(--font-arabic), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* English pages lead with Inter */
+html[lang="en"] {
+  --font-sans: var(--font-inter), var(--font-arabic), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+    --focus-ring: var(--color-brand);
+  }
+
+  body {
+    background: var(--color-ivory);
+    color: var(--color-ink);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-gold-light);
+    color: var(--color-brand-deep);
+  }
+
+  [id] {
+    scroll-margin-top: 6.5rem;
+  }
+}
+
+@layer components {
+  /* Dark sections switch the focus ring to light gold */
+  .on-dark {
+    --focus-ring: var(--color-gold-light);
+  }
+
+  .container-site {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 82rem;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 40rem) {
+    .container-site {
+      padding-inline: 2rem;
+    }
+  }
+  @media (min-width: 64rem) {
+    .container-site {
+      padding-inline: 3rem;
+    }
+  }
+
+  .section-y {
+    padding-block: 5rem;
+  }
+  @media (min-width: 40rem) {
+    .section-y {
+      padding-block: 6.5rem;
+    }
+  }
+  @media (min-width: 64rem) {
+    .section-y {
+      padding-block: 8.5rem;
+    }
+  }
+
+  /* Small label above headings: short gold rule + text */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-gold-ink);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.75rem;
+    height: 2px;
+    background: currentColor;
+    opacity: 0.85;
+  }
+  :lang(en) .eyebrow,
+  .eyebrow:lang(en) {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .on-dark .eyebrow {
+    color: var(--color-gold-light);
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Motion — disabled entirely for prefers-reduced-motion
+   ───────────────────────────────────────────── */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: scale(1.07);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  45% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-rise {
+    animation: rise 1s var(--ease-soft) both;
+    animation-delay: var(--delay, 0ms);
+  }
+  .animate-settle {
+    animation: settle 2.4s var(--ease-soft) both;
+  }
+  .animate-scroll-cue {
+    animation: scroll-cue 2.4s var(--ease-soft) infinite;
+  }
+
+  /* Scroll reveal: enabled by components/ui/reveal-observer.tsx */
+  .reveal-ready [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.9s var(--ease-soft),
+      transform 0.9s var(--ease-soft);
+    transition-delay: var(--delay, 0ms);
+  }
+  .reveal-ready [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Smooth accordion open/close where supported (progressive enhancement) */
+@supports (interpolate-size: allow-keywords) {
+  .accordion {
+    interpolate-size: allow-keywords;
+  }
+  .accordion::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size 0.45s var(--ease-soft),
+      content-visibility 0.45s allow-discrete;
+  }
+  .accordion[open]::details-content {
+    block-size: auto;
+  }
+}
+.accordion summary::-webkit-details-marker {
+  display: none;
+}
