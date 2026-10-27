@@ -15,7 +15,6 @@ export function LogoLockup({ className }: { className?: string }) {
         height={brand.icon.height}
         alt=""
         unoptimized
-        preload
         className="h-11 w-auto lg:h-12"
       />
       <Image
@@ -24,7 +23,6 @@ export function LogoLockup({ className }: { className?: string }) {
         height={brand.wordmark.height}
         alt=""
         unoptimized
-        preload
         className="h-9 w-auto lg:h-10"
       />
     </span>

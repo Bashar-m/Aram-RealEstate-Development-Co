@@ -8,11 +8,13 @@
     "start": "next start",
     "lint": "eslint",
     "images": "node scripts/optimize-images.mjs",
-    "typecheck": "next typegen && tsc --noEmit"
+    "typecheck": "next typegen && tsc --noEmit",
+    "project-media": "node scripts/extract-project-media.mjs"
   },
   "dependencies": {
     "lucide-react": "1.61.0",
     "next": "16.4.2",
+    "pdfjs-dist": "6.4.299",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },

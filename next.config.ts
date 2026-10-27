@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
     // `npm run images` and resolved by this loader.
     loader: "custom",
     loaderFile: "./lib/image-loader.ts",
-    deviceSizes: [640, 960, 1280, 1920],
+    deviceSizes: [640, 768, 960, 1280, 1920],
     imageSizes: [320, 480],
   },
   experimental: {

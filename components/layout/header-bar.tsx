@@ -143,7 +143,7 @@ export function HeaderBar({ locale, homeHref, contactHref, items, labels }: Head
               <span className="sm:hidden">{labels.switchLanguageShort}</span>
             </Link>
 
-            <div className="hidden lg:block">
+            <div className="hidden xl:block">
               <Link href={contactHref} className={buttonClasses("primary", "min-h-11 px-5")}>
                 {labels.contactCta}
               </Link>

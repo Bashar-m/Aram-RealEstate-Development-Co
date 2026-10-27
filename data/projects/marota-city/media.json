@@ -1,0 +1,416 @@
+{
+  "cover": {
+    "src": "/projects/marota-city/media/cover",
+    "width": 1080,
+    "height": 720,
+    "page": 1
+  },
+  "render-towers-sky": {
+    "src": "/projects/marota-city/media/render-towers-sky",
+    "width": 2933,
+    "height": 1650,
+    "page": 8
+  },
+  "render-towers-front": {
+    "src": "/projects/marota-city/media/render-towers-front",
+    "width": 2063,
+    "height": 1650,
+    "page": 4
+  },
+  "render-street-retail": {
+    "src": "/projects/marota-city/media/render-street-retail",
+    "width": 2933,
+    "height": 1650,
+    "page": 5
+  },
+  "render-aerial-terraces": {
+    "src": "/projects/marota-city/media/render-aerial-terraces",
+    "width": 2933,
+    "height": 1650,
+    "page": 6
+  },
+  "render-plaza": {
+    "src": "/projects/marota-city/media/render-plaza",
+    "width": 2933,
+    "height": 1650,
+    "page": 7
+  },
+  "render-entrance": {
+    "src": "/projects/marota-city/media/render-entrance",
+    "width": 2933,
+    "height": 1650,
+    "page": 9
+  },
+  "render-rooftop": {
+    "src": "/projects/marota-city/media/render-rooftop",
+    "width": 2933,
+    "height": 1650,
+    "page": 10
+  },
+  "render-aerial-towers": {
+    "src": "/projects/marota-city/media/render-aerial-towers",
+    "width": 1008,
+    "height": 1080,
+    "page": 49
+  },
+  "marota-skyline": {
+    "src": "/projects/marota-city/media/marota-skyline",
+    "width": 3334,
+    "height": 488,
+    "page": 2
+  },
+  "site-plan": {
+    "src": "/projects/marota-city/media/site-plan",
+    "width": 707,
+    "height": 704,
+    "page": 3
+  },
+  "section": {
+    "src": "/projects/marota-city/media/section",
+    "width": 818,
+    "height": 1418,
+    "page": 47
+  },
+  "elevation": {
+    "src": "/projects/marota-city/media/elevation",
+    "width": 854,
+    "height": 1464,
+    "page": 47
+  },
+  "tower-3d": {
+    "src": "/projects/marota-city/media/tower-3d",
+    "width": 657,
+    "height": 1417,
+    "page": 48
+  },
+  "exploded-3d": {
+    "src": "/projects/marota-city/media/exploded-3d",
+    "width": 1123,
+    "height": 1211,
+    "page": 48
+  },
+  "plan-b4-2d": {
+    "src": "/projects/marota-city/media/plan-b4-2d",
+    "width": 2495,
+    "height": 1116,
+    "page": 13
+  },
+  "plan-b4-3d": {
+    "src": "/projects/marota-city/media/plan-b4-3d",
+    "width": 2503,
+    "height": 1504,
+    "page": 14
+  },
+  "plan-b3-2d": {
+    "src": "/projects/marota-city/media/plan-b3-2d",
+    "width": 2467,
+    "height": 1103,
+    "page": 15
+  },
+  "plan-b3-3d": {
+    "src": "/projects/marota-city/media/plan-b3-3d",
+    "width": 2369,
+    "height": 1502,
+    "page": 16
+  },
+  "plan-b2-2d": {
+    "src": "/projects/marota-city/media/plan-b2-2d",
+    "width": 2508,
+    "height": 1121,
+    "page": 17
+  },
+  "plan-b2-3d": {
+    "src": "/projects/marota-city/media/plan-b2-3d",
+    "width": 2240,
+    "height": 1489,
+    "page": 18
+  },
+  "plan-b1-2d": {
+    "src": "/projects/marota-city/media/plan-b1-2d",
+    "width": 3235,
+    "height": 1449,
+    "page": 19
+  },
+  "plan-b1-3d": {
+    "src": "/projects/marota-city/media/plan-b1-3d",
+    "width": 2270,
+    "height": 1502,
+    "page": 20
+  },
+  "plan-f00-2d": {
+    "src": "/projects/marota-city/media/plan-f00-2d",
+    "width": 3235,
+    "height": 1183,
+    "page": 21
+  },
+  "plan-f00-3d": {
+    "src": "/projects/marota-city/media/plan-f00-3d",
+    "width": 2176,
+    "height": 1327,
+    "page": 22
+  },
+  "plan-f01-2d": {
+    "src": "/projects/marota-city/media/plan-f01-2d",
+    "width": 2104,
+    "height": 770,
+    "page": 23
+  },
+  "plan-f01-3d": {
+    "src": "/projects/marota-city/media/plan-f01-3d",
+    "width": 1794,
+    "height": 1215,
+    "page": 24
+  },
+  "plan-f02-2d": {
+    "src": "/projects/marota-city/media/plan-f02-2d",
+    "width": 2112,
+    "height": 772,
+    "page": 25
+  },
+  "plan-f02-3d": {
+    "src": "/projects/marota-city/media/plan-f02-3d",
+    "width": 1859,
+    "height": 1165,
+    "page": 26
+  },
+  "plan-f03-2d": {
+    "src": "/projects/marota-city/media/plan-f03-2d",
+    "width": 1371,
+    "height": 1566,
+    "page": 27
+  },
+  "plan-f03-3d": {
+    "src": "/projects/marota-city/media/plan-f03-3d",
+    "width": 1413,
+    "height": 1017,
+    "page": 27
+  },
+  "plan-f04-2d": {
+    "src": "/projects/marota-city/media/plan-f04-2d",
+    "width": 1338,
+    "height": 1533,
+    "page": 28
+  },
+  "plan-f04-3d": {
+    "src": "/projects/marota-city/media/plan-f04-3d",
+    "width": 1514,
+    "height": 1040,
+    "page": 28
+  },
+  "plan-f05-2d": {
+    "src": "/projects/marota-city/media/plan-f05-2d",
+    "width": 1311,
+    "height": 1502,
+    "page": 29
+  },
+  "plan-f05-3d": {
+    "src": "/projects/marota-city/media/plan-f05-3d",
+    "width": 1472,
+    "height": 961,
+    "page": 29
+  },
+  "plan-f06-2d": {
+    "src": "/projects/marota-city/media/plan-f06-2d",
+    "width": 1353,
+    "height": 1548,
+    "page": 30
+  },
+  "plan-f06-3d": {
+    "src": "/projects/marota-city/media/plan-f06-3d",
+    "width": 1437,
+    "height": 960,
+    "page": 30
+  },
+  "plan-f07-2d": {
+    "src": "/projects/marota-city/media/plan-f07-2d",
+    "width": 1185,
+    "height": 1358,
+    "page": 31
+  },
+  "plan-f07-3d": {
+    "src": "/projects/marota-city/media/plan-f07-3d",
+    "width": 1378,
+    "height": 938,
+    "page": 31
+  },
+  "plan-f08-2d": {
+    "src": "/projects/marota-city/media/plan-f08-2d",
+    "width": 1209,
+    "height": 1385,
+    "page": 32
+  },
+  "plan-f08-3d": {
+    "src": "/projects/marota-city/media/plan-f08-3d",
+    "width": 1372,
+    "height": 938,
+    "page": 32
+  },
+  "plan-f09-2d": {
+    "src": "/projects/marota-city/media/plan-f09-2d",
+    "width": 1196,
+    "height": 1370,
+    "page": 33
+  },
+  "plan-f09-3d": {
+    "src": "/projects/marota-city/media/plan-f09-3d",
+    "width": 1326,
+    "height": 889,
+    "page": 33
+  },
+  "plan-f10-2d": {
+    "src": "/projects/marota-city/media/plan-f10-2d",
+    "width": 1177,
+    "height": 1355,
+    "page": 34
+  },
+  "plan-f10-3d": {
+    "src": "/projects/marota-city/media/plan-f10-3d",
+    "width": 1343,
+    "height": 930,
+    "page": 34
+  },
+  "plan-f11-2d": {
+    "src": "/projects/marota-city/media/plan-f11-2d",
+    "width": 1190,
+    "height": 1364,
+    "page": 35
+  },
+  "plan-f11-3d": {
+    "src": "/projects/marota-city/media/plan-f11-3d",
+    "width": 1360,
+    "height": 952,
+    "page": 35
+  },
+  "plan-f12-2d": {
+    "src": "/projects/marota-city/media/plan-f12-2d",
+    "width": 1176,
+    "height": 1355,
+    "page": 36
+  },
+  "plan-f12-3d": {
+    "src": "/projects/marota-city/media/plan-f12-3d",
+    "width": 1334,
+    "height": 898,
+    "page": 36
+  },
+  "plan-f13-2d": {
+    "src": "/projects/marota-city/media/plan-f13-2d",
+    "width": 1166,
+    "height": 1337,
+    "page": 37
+  },
+  "plan-f13-3d": {
+    "src": "/projects/marota-city/media/plan-f13-3d",
+    "width": 1375,
+    "height": 902,
+    "page": 37
+  },
+  "plan-f14-2d": {
+    "src": "/projects/marota-city/media/plan-f14-2d",
+    "width": 1210,
+    "height": 1385,
+    "page": 38
+  },
+  "plan-f14-3d": {
+    "src": "/projects/marota-city/media/plan-f14-3d",
+    "width": 1323,
+    "height": 951,
+    "page": 38
+  },
+  "plan-f15-2d": {
+    "src": "/projects/marota-city/media/plan-f15-2d",
+    "width": 1206,
+    "height": 1382,
+    "page": 39
+  },
+  "plan-f15-3d": {
+    "src": "/projects/marota-city/media/plan-f15-3d",
+    "width": 1286,
+    "height": 873,
+    "page": 39
+  },
+  "plan-f16-2d": {
+    "src": "/projects/marota-city/media/plan-f16-2d",
+    "width": 1175,
+    "height": 1370,
+    "page": 40
+  },
+  "plan-f16-3d": {
+    "src": "/projects/marota-city/media/plan-f16-3d",
+    "width": 1344,
+    "height": 997,
+    "page": 40
+  },
+  "plan-f17-2d": {
+    "src": "/projects/marota-city/media/plan-f17-2d",
+    "width": 1170,
+    "height": 1356,
+    "page": 41
+  },
+  "plan-f17-3d": {
+    "src": "/projects/marota-city/media/plan-f17-3d",
+    "width": 1309,
+    "height": 987,
+    "page": 41
+  },
+  "plan-f18-2d": {
+    "src": "/projects/marota-city/media/plan-f18-2d",
+    "width": 1179,
+    "height": 1370,
+    "page": 42
+  },
+  "plan-f18-3d": {
+    "src": "/projects/marota-city/media/plan-f18-3d",
+    "width": 1369,
+    "height": 965,
+    "page": 42
+  },
+  "plan-f19-2d": {
+    "src": "/projects/marota-city/media/plan-f19-2d",
+    "width": 1248,
+    "height": 1442,
+    "page": 43
+  },
+  "plan-f19-3d": {
+    "src": "/projects/marota-city/media/plan-f19-3d",
+    "width": 1157,
+    "height": 996,
+    "page": 43
+  },
+  "plan-f20-2d": {
+    "src": "/projects/marota-city/media/plan-f20-2d",
+    "width": 1163,
+    "height": 1343,
+    "page": 44
+  },
+  "plan-f20-3d": {
+    "src": "/projects/marota-city/media/plan-f20-3d",
+    "width": 1196,
+    "height": 1044,
+    "page": 44
+  },
+  "plan-f21-2d": {
+    "src": "/projects/marota-city/media/plan-f21-2d",
+    "width": 1150,
+    "height": 1341,
+    "page": 45
+  },
+  "plan-f21-3d": {
+    "src": "/projects/marota-city/media/plan-f21-3d",
+    "width": 1537,
+    "height": 980,
+    "page": 45
+  },
+  "plan-f22-2d": {
+    "src": "/projects/marota-city/media/plan-f22-2d",
+    "width": 1089,
+    "height": 1269,
+    "page": 46
+  },
+  "plan-f22-3d": {
+    "src": "/projects/marota-city/media/plan-f22-3d",
+    "width": 1497,
+    "height": 1030,
+    "page": 46
+  }
+}

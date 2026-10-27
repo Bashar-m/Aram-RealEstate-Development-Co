@@ -130,6 +130,24 @@ html[lang="en"] {
   }
 }
 
+@layer utilities {
+  /* Outlined display numerals (project codes, chapter numbers) */
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--color-gold-light);
+  }
+  .text-outline-brand {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-gold);
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* ─────────────────────────────────────────────
    Motion — disabled entirely for prefers-reduced-motion
    ───────────────────────────────────────────── */
@@ -183,6 +201,9 @@ html[lang="en"] {
   .animate-scroll-cue {
     animation: scroll-cue 2.4s var(--ease-soft) infinite;
   }
+  .animate-soft-ping {
+    animation: soft-ping 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
 
   /* Scroll reveal: enabled by components/ui/reveal-observer.tsx */
   .reveal-ready [data-reveal] {
@@ -196,6 +217,36 @@ html[lang="en"] {
   .reveal-ready [data-reveal].is-visible {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes soft-ping {
+  75%,
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* Images that open up as they scroll into view — pure CSS (scroll-driven animations).
+   Browsers without support simply show the image. */
+@keyframes unveil {
+  from {
+    clip-path: inset(14% 6% 14% 6% round 1rem);
+    transform: scale(0.98);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 1rem);
+    transform: none;
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-unveil {
+      animation: unveil linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
   }
 }
 

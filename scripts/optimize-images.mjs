@@ -9,7 +9,7 @@ import path from "node:path";
 import sharp from "sharp";
 
 // Keep in sync with images.deviceSizes + images.imageSizes in next.config.ts
-const WIDTHS = [320, 480, 640, 960, 1280, 1920];
+const WIDTHS = [320, 480, 640, 768, 960, 1280, 1920];
 
 const root = path.resolve(import.meta.dirname, "..");
 const srcDir = path.join(root, "assets/photos");

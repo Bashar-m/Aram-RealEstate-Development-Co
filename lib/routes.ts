@@ -4,13 +4,14 @@ export const locales = ["ar", "en"] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "ar";
 
-export const pages = ["home", "about", "vision", "policies", "contact"] as const;
+export const pages = ["home", "about", "vision", "projects", "policies", "contact"] as const;
 export type PageKey = (typeof pages)[number];
 
 const slugs: Record<PageKey, string> = {
   home: "",
   about: "about",
   vision: "vision",
+  projects: "projects",
   policies: "policies",
   contact: "contact",
 };
@@ -31,6 +32,11 @@ export function otherLocale(locale: Locale): Locale {
 export function pagePath(locale: Locale, page: PageKey) {
   const slug = slugs[page];
   return slug ? `/${locale}/${slug}/` : `/${locale}/`;
+}
+
+/** `/ar/projects/<slug>/` */
+export function projectPath(locale: Locale, slug: string) {
+  return `/${locale}/projects/${slug}/`;
 }
 
 /** Same page in another language: `/ar/about/` → `/en/about/` */
