@@ -3,6 +3,7 @@ import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { ContactForm } from "@/components/contact/contact-form";
 import { buttonClasses } from "@/components/ui/button";
 import { PageHero } from "@/components/ui/page-hero";
+import { SocialIcon } from "@/components/ui/social-icons";
 import { company, whatsappHref } from "@/data/company";
 import { getMessages, resolveLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/metadata";
@@ -28,7 +29,6 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
   const t = getMessages(locale);
   const c = t.contact;
   const { phone, email, whatsapp, address, hours } = company.contact;
-  const waHref = whatsappHref(whatsapp.number);
   const iconProps = { "aria-hidden": true, strokeWidth: 1.6, className: "size-5" } as const;
 
   return (
@@ -50,51 +50,48 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
             <h2 className="text-2xl font-semibold sm:text-3xl">{c.info.title}</h2>
             <ul className="mt-8">
               <InfoRow icon={<Phone {...iconProps} />} label={c.info.phone}>
-                {phone.tel ? (
-                  <a href={`tel:${phone.tel}`} dir="ltr" className="hover:text-brand">{phone.display}</a>
-                ) : (
-                  <span dir="ltr">{phone.display}</span>
-                )}
+                <a href={`tel:${phone.tel}`} dir="ltr" className="hover:text-brand">{phone.display}</a>
               </InfoRow>
               <InfoRow icon={<Mail {...iconProps} />} label={c.info.email}>
-                {email.address ? (
-                  <a href={`mailto:${email.address}`} dir="ltr" className="break-all hover:text-brand">{email.display}</a>
-                ) : (
-                  <span dir="ltr" className="break-all">{email.display}</span>
-                )}
+                <a href={`mailto:${email.address}`} dir="ltr" className="break-all hover:text-brand">{email.display}</a>
               </InfoRow>
-              <InfoRow icon={<MapPin {...iconProps} />} label={c.info.address}>
-                {address[locale] ?? <span className="text-muted">{c.info.addressPending}</span>}
-              </InfoRow>
-              <InfoRow icon={<Clock {...iconProps} />} label={c.info.hours}>
-                {hours[locale] ?? <span className="text-muted">{c.info.hoursPending}</span>}
-              </InfoRow>
+              {address[locale] && (
+                <InfoRow icon={<MapPin {...iconProps} />} label={c.info.address}>
+                  {address[locale]}
+                </InfoRow>
+              )}
+              {hours[locale] && (
+                <InfoRow icon={<Clock {...iconProps} />} label={c.info.hours}>
+                  {hours[locale]}
+                </InfoRow>
+              )}
             </ul>
 
             <div className="mt-8">
-              {waHref ? (
-                <a href={waHref} target="_blank" rel="noopener noreferrer" className={buttonClasses("outline", "w-full")}>
-                  <MessageCircle aria-hidden strokeWidth={1.75} className="size-5" />
-                  {c.info.whatsapp}
-                </a>
-              ) : (
-                <>
-                  <span
-                    aria-disabled="true"
-                    aria-describedby="whatsapp-pending"
-                    className={buttonClasses("outline", "pointer-events-none w-full opacity-50")}
-                  >
-                    <MessageCircle aria-hidden strokeWidth={1.75} className="size-5" />
-                    {c.info.whatsapp}
-                  </span>
-                  <p id="whatsapp-pending" className="mt-3 text-sm text-muted">
-                    {c.info.whatsappPending}
-                  </p>
-                </>
-              )}
+              <a href={whatsappHref(whatsapp.number)} target="_blank" rel="noopener noreferrer" className={buttonClasses("outline", "w-full")}>
+                <MessageCircle aria-hidden strokeWidth={1.75} className="size-5" />
+                {c.info.whatsapp}
+              </a>
             </div>
 
-            <p className="mt-8 rounded-xl bg-stone p-4 text-sm leading-relaxed text-muted">{c.info.placeholderNote}</p>
+            <div className="mt-10">
+              <h3 className="text-sm font-semibold text-gold-ink">{t.footer.follow}</h3>
+              <ul className="mt-4 flex gap-2">
+                {company.social.map((s) => (
+                  <li key={s.id}>
+                    <a
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={s.label}
+                      className="inline-flex size-11 items-center justify-center rounded-full border border-brand/25 text-brand transition-colors hover:border-brand hover:bg-brand hover:text-white"
+                    >
+                      <SocialIcon id={s.id} className="size-[1.1rem]" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           {/* Form */}
@@ -103,7 +100,7 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
               <h2 className="text-2xl font-semibold sm:text-3xl">{c.form.title}</h2>
               <p className="mt-3 text-muted">{c.form.intro}</p>
               <div className="mt-8">
-                <ContactForm t={c.form} />
+                <ContactForm t={c.form} whatsappNumber={whatsapp.number} emailAddress={email.address} />
               </div>
             </div>
           </div>

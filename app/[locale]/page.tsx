@@ -19,7 +19,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const locale = await resolveLocale(params);
   const t = getMessages(locale);
 
-  // Only verified facts belong here — add contact points once official.
+  // Only verified facts belong here.
   const organization = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -27,11 +27,21 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     alternateName: company.name[locale === "ar" ? "en" : "ar"],
     url: new URL(pagePath(locale, "home"), company.siteUrl).toString(),
     logo: new URL(brand.logoPrimary.src, company.siteUrl).toString(),
+    email: company.contact.email.address,
+    telephone: company.contact.phone.tel,
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      telephone: company.contact.phone.tel,
+      email: company.contact.email.address,
+      availableLanguage: ["ar", "en"],
+    },
+    sameAs: company.social.map((s) => s.href),
   };
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization).replace(/</g, "\\u003c") }} />
       <Hero locale={locale} t={t} />
       <AboutPreview locale={locale} t={t} />
       <VisionPreview locale={locale} t={t} />

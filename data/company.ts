@@ -1,10 +1,17 @@
 /**
  * Central company data — the ONLY place to edit contact details and links.
  *
- * Everything below is placeholder content for the prototype.
- * While a `href`/`number` is null the value is shown as plain text (not clickable),
- * so no fake number can ever be dialled. Fill them in once official data is approved.
+ * Optional fields (address, hours) are hidden on the site while they are null.
  */
+
+// Production domain — used for canonical URLs, hreflang, sitemap, robots and Open Graph.
+// NEXT_PUBLIC_SITE_URL can override it (e.g. for a staging build).
+const SITE_URL = "https://aram-construction.com";
+const siteUrlFromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/+$/, "");
+
+if (siteUrlFromEnv && !/^https:\/\/[^/\s]+$/.test(siteUrlFromEnv)) {
+  throw new Error(`NEXT_PUBLIC_SITE_URL must be an https origin without a path, got "${siteUrlFromEnv}".`);
+}
 
 export const company = {
   name: {
@@ -13,49 +20,42 @@ export const company = {
   },
   shortName: { ar: "آرام", en: "ARAM" },
 
-  // Production domain — used for canonical URLs, hreflang, sitemap and Open Graph.
-  // Set NEXT_PUBLIC_SITE_URL at build time, or replace the fallback.
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.aram-realestate.example",
+  siteUrl: siteUrlFromEnv || SITE_URL,
 
   contact: {
     phone: {
-      display: "05X XXX XXXX",
-      // e.g. "+9665XXXXXXXX" — enables the tel: link
-      tel: null as string | null,
+      display: "+963 944 703 009",
+      tel: "+963944703009",
     },
     whatsapp: {
-      display: "05X XXX XXXX",
-      // International format, digits only, e.g. "9665XXXXXXXX" — enables the WhatsApp button
-      number: null as string | null,
+      // International format, digits only
+      number: "963944703009",
     },
     email: {
-      display: "info@aram-realestate.example",
-      // e.g. "info@aram.com" — enables the mailto: link
-      address: null as string | null,
+      display: "info@aram-construction.com",
+      address: "info@aram-construction.com",
     },
-    // Office address — shows "to be added" text while null
+    // Office address — the row is hidden while null
     address: {
       ar: null as string | null,
       en: null as string | null,
     },
-    // Working hours — shows "to be announced" text while null
+    // Working hours — the row is hidden while null
     hours: {
       ar: null as string | null,
       en: null as string | null,
     },
   },
 
-  // Social accounts — icons render as disabled until a URL is added
   social: [
-    { id: "instagram", label: "Instagram", href: null },
-    { id: "x", label: "X", href: null },
-    { id: "linkedin", label: "LinkedIn", href: null },
-    { id: "youtube", label: "YouTube", href: null },
-  ] as { id: SocialId; label: string; href: string | null }[],
+    { id: "facebook", label: "Facebook", href: "https://www.facebook.com/share/19ZbAB1ypd/" },
+    { id: "instagram", label: "Instagram", href: "https://www.instagram.com/aram.alaqaria" },
+  ] as { id: SocialId; label: string; href: string }[],
 };
 
-export type SocialId = "instagram" | "x" | "linkedin" | "youtube";
+export type SocialId = "facebook" | "instagram";
 
-export function whatsappHref(number: string | null) {
-  return number ? `https://wa.me/${number.replace(/\D/g, "")}` : null;
+export function whatsappHref(number: string, text?: string) {
+  const base = `https://wa.me/${number.replace(/\D/g, "")}`;
+  return text ? `${base}?text=${encodeURIComponent(text)}` : base;
 }

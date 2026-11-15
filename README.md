@@ -13,7 +13,7 @@ A bilingual (Arabic / English), fully static corporate website with an interacti
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38BDF8?logo=tailwindcss&logoColor=white)
 ![Static export](https://img.shields.io/badge/Deploy-static_export-3B4D23)
-![Status](https://img.shields.io/badge/status-prototype-A68F31)
+![Status](https://img.shields.io/badge/status-production-3B4D23)
 
 </div>
 
@@ -23,7 +23,7 @@ A bilingual (Arabic / English), fully static corporate website with an interacti
 
 موقع تعريفي لشركة آرام للتطوير العقاري بالعربية (افتراضيًا، من اليمين لليسار) والإنجليزية، يُبنى كموقع **Static** كامل يمكن رفعه على أي استضافة. يضم الصفحات التعريفية وقسم **مشاريعنا**، ويبدأ بمشروع ماروتا سيتي T104 / T105: مقطع تفاعلي للمبنى، والمخططات الأفقية لكل طابق، ومعرض للتصورات المعمارية، وعارض للكتيّب لا يُحمَّل إلا عند الطلب.
 
-> **الحالة:** نسخة أولية للعرض والمراجعة. بيانات التواصل وصور الصفحات العامة ونصوص السياسات تجريبية إلى حين اعتماد المحتوى الرسمي.
+> **الحالة:** جاهز للإطلاق. بيانات التواصل وروابط فيسبوك وإنستغرام رسمية، ونموذج التواصل يرسل عبر واتساب أو البريد الإلكتروني. الصور العامة (غير صور المشاريع) توضيحية.
 
 ---
 
@@ -95,9 +95,11 @@ Open <http://localhost:3000>. The root `/` redirects to `/ar/`.
 **Production build**
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://your-domain.com npm run build
+npm run build
 npx serve out          # preview the static output locally
 ```
+
+The production domain is `https://aram-construction.com` (set in `data/company.ts`). To build for another origin, e.g. staging, set `NEXT_PUBLIC_SITE_URL=https://…`; the build fails if it is not an `https://` origin.
 
 > `next start` is not used: the site is exported as static files to `out/`.
 
@@ -106,7 +108,7 @@ npx serve out          # preview the static output locally
 | Command | Description |
 |---|---|
 | `npm run dev` | Start the development server |
-| `npm run build` | Build the static site into `out/` |
+| `npm run build` | Build the static site into `out/` (then copies `deploy/.htaccess` into it) |
 | `npm run typecheck` | Generate route types and run the TypeScript compiler |
 | `npm run lint` | Run ESLint |
 | `npm run images` | Regenerate responsive WebP variants from `assets/photos/` |
@@ -165,7 +167,7 @@ types/                      Ambient type declarations
 | Arabic text | `messages/ar.ts` |
 | English text | `messages/en.ts`: TypeScript flags any missing key |
 | Phone, WhatsApp, email, address, hours, social links | `data/company.ts` |
-| Production domain (canonical, sitemap, Open Graph) | `NEXT_PUBLIC_SITE_URL` or `data/company.ts` |
+| Production domain (canonical, sitemap, Open Graph) | `SITE_URL` in `data/company.ts` (or `NEXT_PUBLIC_SITE_URL` to override) |
 | Brand colours | `app/globals.css`, `@theme` block |
 | Fonts | `lib/fonts.ts` |
 | Logos | `public/brand/web/` (paths in `data/images.ts`) |
@@ -173,7 +175,9 @@ types/                      Ambient type declarations
 | Page photography | Replace a file in `assets/photos/` (same name), then `npm run images` |
 | Project content | `data/projects/<slug>/index.ts` |
 
-**Contact data is safe by default.** While `tel`, `whatsapp.number`, `email.address` or a social `href` in `data/company.ts` is `null`, the value is shown as plain text and is not clickable. Fill it in and it becomes a working link or button automatically.
+The office address and working hours in `data/company.ts` are optional: their rows on the contact page stay hidden while they are `null`.
+
+**Contact form.** A static site has no server, so the form never sends or stores data itself. After validation it opens WhatsApp (`wa.me`) or the visitor's email app (`mailto:`) with the message pre-filled, and the visitor presses send there.
 
 ## Projects
 
@@ -229,29 +233,32 @@ Measured with Lighthouse 12 (mobile, simulated slow 4G, 4× CPU) against the pro
 
 ## Deployment
 
-`npm run build` produces a self-contained static site in **`out/`**. Upload it to any static host (Netlify, Cloudflare Pages, Vercel, Amazon S3 + CloudFront, Nginx, Apache…).
+`npm run build` produces a self-contained static site in **`out/`**. Upload the **contents** of `out/` (including the hidden `.htaccess`) to the web root.
 
-- **Clean URLs:** with `trailingSlash: true` every page is exported as `<route>/index.html`, so no rewrite rules are needed.
-- **404:** configure the host to serve `404.html` for unknown paths.
-- **Domain:** set `NEXT_PUBLIC_SITE_URL` before building so canonical URLs, `hreflang` and the sitemap are correct.
+- **Domain:** `aram-construction.com`. Canonical URLs, `hreflang`, `robots.txt` and the sitemap use it; `www.` redirects to it.
+- **Apache / LiteSpeed (Hostinger, cPanel…):** `deploy/.htaccess` is copied into `out/` automatically. It redirects `www.` to the bare domain, forces HTTPS, redirects `/` to `/ar/`, serves `404.html`, blocks directory listing and dotfiles, sets `.mjs` to a JavaScript MIME type (needed by the PDF.js worker), configures caching and compression, and sends the security headers:
+  - `Content-Security-Policy`: same-origin only; `'unsafe-inline'` for scripts and styles is required by the Next.js static export
+  - `Strict-Transport-Security`, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy`
+- **Other hosts (Nginx, Netlify, Cloudflare Pages…):** `.htaccess` is ignored there. Port the same headers, the `/` → `/ar/` redirect and the 404 page to the host's own config.
+- **SSL:** enable an SSL certificate on the host before launch; the HTTPS redirect and HSTS assume it.
 - **Brochures:** the host should support HTTP range requests for PDFs (almost all do) so the viewer can stream large files.
-- **Caching:** files under `/_next/static/` are content-hashed and can be cached long-term (`immutable`).
 
 ## Content status
 
 | Item | Status |
 |---|---|
-| Contact details, social links | Placeholders, displayed as plain text until official data is added |
-| Contact form | Validates input but does not send; shows a clear "not enabled" notice |
-| Policies | Drafts pending legal review; the page says so |
-| Page photography (non-project) | Illustrative stock photos (Unsplash License), not ARAM projects |
+| Contact details | Official: phone / WhatsApp +963 944 703 009, email info@aram-construction.com |
+| Social links | Official: Facebook and Instagram |
+| Contact form | Live: sends via WhatsApp or the visitor's email app; the site stores no data |
+| Office address, working hours | Not published yet (rows hidden until added in `data/company.ts`) |
+| Policies | Published company commitments |
+| Page photography (non-project) | Illustrative stock photos (Unsplash License), not ARAM projects; the footer says so |
 | Project content | Taken from the official brochure; items awaiting confirmation are tracked separately |
 
 ## Roadmap
 
-- [ ] Replace placeholder contact data, social links and the production domain
-- [ ] Official company photography and approved copy
-- [ ] Connect the contact form to a form service
+- [ ] Official company photography
+- [ ] Office address and working hours
 - [ ] `/admin` dashboard for project CRUD: see [`docs/projects-cms.md`](docs/projects-cms.md)
 - [ ] Additional projects
 

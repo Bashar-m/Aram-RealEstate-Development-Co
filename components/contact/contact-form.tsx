@@ -1,8 +1,9 @@
 "use client";
 
 import { useRef, useState, type FormEvent } from "react";
-import { AlertCircle, Info } from "lucide-react";
-import { Arrow, buttonClasses } from "@/components/ui/button";
+import { AlertCircle, CheckCircle2, Mail, MessageCircle } from "lucide-react";
+import { buttonClasses } from "@/components/ui/button";
+import { whatsappHref } from "@/data/company";
 import { cn } from "@/lib/cn";
 import type { Messages } from "@/lib/i18n";
 
@@ -10,6 +11,9 @@ type FormText = Messages["contact"]["form"];
 type Field = "name" | "email" | "phone" | "message";
 type Values = Record<Field, string>;
 type Errors = Partial<Record<Field, string>>;
+type Channel = "whatsapp" | "email";
+
+const MAX: Record<Field, number> = { name: 100, email: 254, phone: 20, message: 1500 };
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const FIELDS: Field[] = ["name", "email", "phone", "message"];
@@ -24,8 +28,7 @@ function validate(values: Values, t: FormText["errors"]): Errors {
   if (!name) errors.name = t.nameRequired;
   else if (name.length < 2) errors.name = t.nameShort;
 
-  if (!email) errors.email = t.emailRequired;
-  else if (!EMAIL.test(email)) errors.email = t.emailInvalid;
+  if (email && !EMAIL.test(email)) errors.email = t.emailInvalid;
 
   if (phoneDigits && !/^\d{9,15}$/.test(phoneDigits)) errors.phone = t.phoneInvalid;
 
@@ -35,22 +38,39 @@ function validate(values: Values, t: FormText["errors"]): Errors {
   return errors;
 }
 
+/** Builds the plain-text message the visitor sends from their own app. */
+function compose(values: Values, t: FormText) {
+  const lines = [t.compose.greeting, "", `${t.name}: ${values.name.trim()}`];
+  if (values.email.trim()) lines.push(`${t.email}: ${values.email.trim()}`);
+  if (values.phone.trim()) lines.push(`${t.phone}: ${values.phone.trim()}`);
+  lines.push("", values.message.trim());
+  return lines.join("\n");
+}
+
 /**
- * Prototype contact form: validates input but never sends anything.
- * To go live, replace the "disabled" branch in handleSubmit with a call to a
- * form service (e.g. Formspree, Web3Forms) — a static site has no server.
+ * Contact form for a fully static site: nothing is sent to or stored on a server.
+ * After validation it opens WhatsApp (wa.me) or the visitor's email app (mailto:)
+ * with the message pre-filled, and the visitor confirms sending there.
  */
-export function ContactForm({ t }: { t: FormText }) {
+export function ContactForm({
+  t,
+  whatsappNumber,
+  emailAddress,
+}: {
+  t: FormText;
+  whatsappNumber: string;
+  emailAddress: string;
+}) {
   const formRef = useRef<HTMLFormElement>(null);
   const [values, setValues] = useState<Values>({ name: "", email: "", phone: "", message: "" });
   const [errors, setErrors] = useState<Errors>({});
   const [submitted, setSubmitted] = useState(false);
-  const [notice, setNotice] = useState(false);
+  const [notice, setNotice] = useState<Channel | null>(null);
 
   const update = (field: Field, value: string) => {
     const next = { ...values, [field]: value };
     setValues(next);
-    setNotice(false);
+    setNotice(null);
     // After the first submit, re-validate live so errors clear as they're fixed
     if (submitted) setErrors(validate(next, t.errors));
   };
@@ -63,12 +83,22 @@ export function ContactForm({ t }: { t: FormText }) {
 
     const firstInvalid = FIELDS.find((f) => found[f]);
     if (firstInvalid) {
-      setNotice(false);
+      setNotice(null);
       formRef.current?.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)?.focus();
       return;
     }
-    // Sending is intentionally disabled in this prototype.
-    setNotice(true);
+
+    const submitter = (event.nativeEvent as SubmitEvent).submitter;
+    const channel: Channel = submitter?.getAttribute("value") === "email" ? "email" : "whatsapp";
+    const text = compose(values, t);
+
+    if (channel === "whatsapp") {
+      window.open(whatsappHref(whatsappNumber, text), "_blank", "noopener,noreferrer");
+    } else {
+      const subject = `${t.compose.subject} — ${values.name.trim()}`;
+      window.location.href = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
+    }
+    setNotice(channel);
   };
 
   const hasErrors = Object.keys(errors).length > 0;
@@ -106,6 +136,7 @@ export function ContactForm({ t }: { t: FormText }) {
   const a11y = (field: Field) => ({
     id: `contact-${field}`,
     name: field,
+    maxLength: MAX[field],
     "aria-invalid": errors[field] ? true : undefined,
     "aria-describedby": errors[field] ? `contact-${field}-error` : undefined,
   });
@@ -138,14 +169,13 @@ export function ContactForm({ t }: { t: FormText }) {
         </div>
 
         <div>
-          {label("email", t.email, true)}
+          {label("email", t.email, false)}
           <input
             {...a11y("email")}
             type="email"
             inputMode="email"
             autoComplete="email"
             dir="ltr"
-            required
             placeholder={t.emailPlaceholder}
             value={values.email}
             onChange={(e) => update("email", e.target.value)}
@@ -185,21 +215,27 @@ export function ContactForm({ t }: { t: FormText }) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <button type="submit" className={buttonClasses("primary", "w-full cursor-pointer sm:w-auto")}>
-          {t.submit}
-          <Arrow />
-        </button>
-        <p className="text-sm text-muted">{t.prototypeHint}</p>
+      <div className="space-y-4">
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <button type="submit" name="channel" value="whatsapp" className={buttonClasses("primary", "w-full cursor-pointer sm:w-auto")}>
+            <MessageCircle aria-hidden strokeWidth={1.75} className="size-5" />
+            {t.submitWhatsapp}
+          </button>
+          <button type="submit" name="channel" value="email" className={buttonClasses("outline", "w-full cursor-pointer sm:w-auto")}>
+            <Mail aria-hidden strokeWidth={1.75} className="size-5" />
+            {t.submitEmail}
+          </button>
+        </div>
+        <p className="text-sm text-muted">{t.hint}</p>
       </div>
 
       <div role="status" className="empty:hidden">
         {notice && (
-          <div className="flex gap-4 rounded-xl border border-gold/40 bg-gold-light/15 p-5">
-            <Info aria-hidden strokeWidth={1.75} className="mt-0.5 size-5 shrink-0 text-gold-ink" />
+          <div className="flex gap-4 rounded-xl border border-brand/25 bg-brand/5 p-5">
+            <CheckCircle2 aria-hidden strokeWidth={1.75} className="mt-0.5 size-5 shrink-0 text-brand" />
             <div>
-              <p className="font-semibold">{t.disabled.title}</p>
-              <p className="mt-1.5 leading-relaxed text-ink/80">{t.disabled.text}</p>
+              <p className="font-semibold">{t.opened[notice].title}</p>
+              <p className="mt-1.5 leading-relaxed text-ink/80">{t.opened[notice].text}</p>
             </div>
           </div>
         )}

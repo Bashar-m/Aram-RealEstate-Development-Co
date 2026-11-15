@@ -22,7 +22,7 @@ const en: Messages = {
     policies: {
       title: "Our Policies",
       description:
-        "ARAM Real Estate Development policies on privacy and data protection, quality, transparency and customer care (draft under review).",
+        "ARAM Real Estate Development policies on privacy and data protection, quality, transparency and customer care.",
     },
     projects: {
       title: "Our Projects",
@@ -62,8 +62,7 @@ const en: Messages = {
   common: {
     readMore: "Read more",
     illustrativeNote:
-      "General photography in this version is illustrative; project images and plans come from each project’s brochure.",
-    comingSoon: "Coming soon",
+      "General photography on this website is illustrative; project images and plans come from each project’s brochure.",
   },
 
   images: {
@@ -290,12 +289,7 @@ const en: Messages = {
       description:
         "We believe clarity is the foundation of trust, so here we set out the principles we follow with our clients and partners.",
     },
-    notice: {
-      title: "Draft under review",
-      text: "The content on this page is a prototype draft for presentation purposes only and does not constitute approved legal policies. It will undergo legal and management review before official adoption.",
-    },
     tocLabel: "On this page",
-    status: "Status: Draft — pending approval",
     sections: [
       {
         id: "privacy",
@@ -304,6 +298,7 @@ const en: Messages = {
           "We respect the privacy of our website visitors and clients, and handle their personal data responsibly and with care.",
         points: [
           "We only collect the data needed to communicate, respond to enquiries and provide our services.",
+          "Our website uses no cookies or tracking tools and stores no data: the contact form opens your message in WhatsApp or your email app for you to send yourself.",
           "We do not share personal data with any other party without the owner’s consent, or except as required by applicable regulations.",
           "We apply appropriate organisational and technical measures to protect data from unauthorised access or use.",
           "Data owners may request access to, correction of, or deletion of their data through our official contact channels.",
@@ -360,42 +355,47 @@ const en: Messages = {
       phone: "Phone",
       email: "Email",
       address: "Office address",
-      addressPending: "Office address will be added soon",
       hours: "Working hours",
-      hoursPending: "To be announced",
       whatsapp: "Chat on WhatsApp",
-      whatsappPending: "WhatsApp will be enabled once the official number is confirmed",
-      placeholderNote:
-        "The contact details shown are placeholders and will be replaced with official information.",
     },
     form: {
       title: "Send us a message",
-      intro: "Fill in the form below and tell us how we can help.",
+      intro: "Fill in the form below and send it to us via WhatsApp or email.",
       name: "Full name",
       namePlaceholder: "Your full name",
       email: "Email",
       emailPlaceholder: "name@example.com",
       phone: "Mobile number",
-      phonePlaceholder: "05X XXX XXXX",
+      phonePlaceholder: "+963 9XX XXX XXX",
       message: "Message",
       messagePlaceholder: "How can we help?",
       required: "Required",
       optional: "Optional",
-      submit: "Send message",
-      prototypeHint: "Prototype form — no data is sent in this version.",
+      submitWhatsapp: "Send via WhatsApp",
+      submitEmail: "Send by email",
+      hint: "Your message opens ready to send in WhatsApp or your email app, where you confirm it. This website stores no data.",
+      compose: {
+        greeting: "Hello ARAM Real Estate Development,",
+        subject: "Website enquiry",
+      },
       errors: {
         nameRequired: "Please enter your full name.",
         nameShort: "Name must be at least 2 characters.",
-        emailRequired: "Please enter your email address.",
         emailInvalid: "Please enter a valid email address.",
         phoneInvalid: "Please enter a valid mobile number (digits only, 9–15 digits).",
         messageRequired: "Please write your message.",
         messageShort: "Message must be at least 10 characters.",
         summary: "Please correct the highlighted fields.",
       },
-      disabled: {
-        title: "Message sending is not enabled yet",
-        text: "This is a prototype of the website and message sending has not been activated, so your message was not sent. The form will be enabled when the official version launches.",
+      opened: {
+        whatsapp: {
+          title: "Your message is ready in WhatsApp",
+          text: "Press “Send” in WhatsApp to deliver it. If WhatsApp did not open, contact us directly on the number shown.",
+        },
+        email: {
+          title: "Your message is ready in your email app",
+          text: "Press “Send” in your email app to deliver it. If it did not open, email us directly at the address shown.",
+        },
       },
     },
   },
@@ -495,9 +495,7 @@ const en: Messages = {
     pages: "Pages",
     contact: "Contact",
     follow: "Follow us",
-    socialPending: "Social media links will be activated soon",
     rights: "All rights reserved.",
-    prototype: "Prototype for review",
   },
 };
 

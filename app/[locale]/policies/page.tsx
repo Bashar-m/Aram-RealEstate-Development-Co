@@ -1,4 +1,4 @@
-import { FileClock, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { CtaBand } from "@/components/ui/cta-band";
 import { PageHero } from "@/components/ui/page-hero";
 import { getMessages, resolveLocale } from "@/lib/i18n";
@@ -19,23 +19,7 @@ export default async function PoliciesPage({ params }: PageProps<"/[locale]/poli
 
       <section className="section-y">
         <div className="container-site">
-          {/* Draft notice — required until the policies are legally approved */}
-          <div
-            role="note"
-            data-reveal
-            className="flex flex-col gap-4 rounded-2xl border border-gold/40 bg-gold-light/15 p-6 sm:flex-row sm:gap-5 sm:p-8"
-          >
-            <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-gold-light/40 text-brand-deep">
-              <FileClock aria-hidden strokeWidth={1.6} className="size-5" />
-            </span>
-            <div>
-              <h2 className="text-lg font-semibold">{p.notice.title}</h2>
-              <p className="mt-2 max-w-3xl leading-relaxed text-ink/80">{p.notice.text}</p>
-              <p className="mt-3 text-sm font-semibold text-gold-ink">{p.status}</p>
-            </div>
-          </div>
-
-          <div className="mt-14 grid gap-10 lg:mt-20 lg:grid-cols-12 lg:gap-8">
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
             <aside className="lg:col-span-4">
               <nav aria-labelledby="toc-title" className="lg:sticky lg:top-28">
                 <h2 id="toc-title" className="eyebrow">
